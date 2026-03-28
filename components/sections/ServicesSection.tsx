@@ -23,97 +23,75 @@ export default function ServicesSection() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const cards = entry.target.querySelectorAll(".svc-card");
-            cards.forEach((card, i) => {
-              (card as HTMLElement).style.animation = `fadeInUp 0.6s ease-out ${i * 0.1}s both`;
+            entry.target.querySelectorAll(".reveal").forEach((el) => {
+              el.classList.add("visible");
             });
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
+  const renderCard = (svc: typeof featured[0], i: number, style?: React.CSSProperties) => (
+    <div key={svc.id} className={`card reveal reveal-delay-${Math.min(i + 1, 6)}`} style={{
+      padding: "clamp(1.2rem, 3vw, 1.8rem)",
+      display: "flex", flexDirection: "column", gap: 12,
+      ...style,
+    }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <span style={{ fontSize: "1.3rem", filter: "grayscale(100%)", opacity: 0.6 }}>
+          {svc.icon}
+        </span>
+        <span className="t-label" style={{ color: "rgba(255,255,255,0.08)", fontSize: 9 }}>
+          {String(i + 1).padStart(2, "0")}
+        </span>
+      </div>
+      <div>
+        <p className="t-label" style={{ color: "rgba(255,255,255,0.2)", fontSize: 9, marginBottom: 4 }}>
+          {CATEGORY_LABELS[svc.category]}
+        </p>
+        <h3 className="t-h3" style={{ marginBottom: 0 }}>{svc.name}</h3>
+      </div>
+      <div style={{ marginTop: "auto" }}>
+        <span className="t-price">{svc.price}</span>
+      </div>
+    </div>
+  );
+
   return (
     <section ref={sectionRef} className="section" style={{ background: "#050505", position: "relative" }}>
-      {/* Subtle glow */}
-      <div style={{
-        position: "absolute", top: "20%", left: "-10%",
-        width: 400, height: 400,
-        background: "radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%)",
-        borderRadius: "50%", filter: "blur(80px)",
-        pointerEvents: "none",
-      }} />
-
       <div className="container">
         {/* Header */}
-        <div style={{ marginBottom: "clamp(2.5rem, 6vw, 4rem)" }}>
-          <span className="tag" style={{ marginBottom: 16, display: "inline-flex" }}>Dịch Vụ</span>
-          <div className="accent-line" style={{ margin: "16px 0 20px" }} />
-          <h2 className="t-h2" style={{ maxWidth: 520 }}>
+        <div className="section-header reveal">
+          <span className="tag">Dịch Vụ</span>
+          <div className="accent-line" />
+          <h2 className="t-h2" style={{ maxWidth: 480 }}>
             Mọi Phong Cách.<br />
             <span className="gradient-text">Một Địa Chỉ.</span>
           </h2>
         </div>
 
-        {/* Service grid – 1 col mobile, 2 col sm, 3 col lg */}
-        <div className="grid-auto-3" style={{ marginBottom: 48 }}>
-          {featured.map((svc, i) => (
-            <div key={svc.id} className="card svc-card" style={{
-              padding: "clamp(1.4rem, 3vw, 2rem)",
-              display: "flex", flexDirection: "column", gap: 14,
-              opacity: 0,
-            }}>
-              {/* Top row */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{
-                  fontSize: "1.4rem",
-                  filter: "grayscale(100%)",
-                  opacity: 0.7,
-                }}>
-                  {svc.icon}
-                </span>
-                <span className="t-label" style={{ color: "rgba(255,255,255,0.12)", fontSize: 9 }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-              {/* Content */}
-              <div>
-                <p className="t-label" style={{ color: "rgba(255,255,255,0.25)", fontSize: 9, marginBottom: 6 }}>
-                  {CATEGORY_LABELS[svc.category]}
-                </p>
-                <h3 className="t-h3" style={{ marginBottom: 0 }}>{svc.name}</h3>
-              </div>
-              {/* Price */}
-              <div style={{ marginTop: "auto" }}>
-                <span className="t-price">{svc.price}</span>
-              </div>
-              {/* Border accent on hover */}
-              <div style={{
-                position: "absolute", bottom: 0, left: 0,
-                width: "0%", height: 2,
-                background: "linear-gradient(90deg, #fff, transparent)",
-                transition: "width 0.5s ease",
-              }}
-                className="card-accent-bar"
-              />
-            </div>
-          ))}
+        {/* Mobile: horizontal scroll */}
+        <div className="scroll-snap-x mobile-only"
+          style={{ margin: "0 calc(var(--container-px) * -1)", padding: "0 var(--container-px)" }}>
+          {featured.map((svc, i) => renderCard(svc, i, { width: "75vw", maxWidth: 280 }))}
         </div>
 
-        <Link href={ROUTES.price} className="btn btn-outline">
-          Xem Bảng Giá Đầy Đủ
-        </Link>
-      </div>
+        {/* Desktop: grid */}
+        <div className="desktop-only grid-auto-3" style={{ marginBottom: 40 }}>
+          {featured.map((svc, i) => renderCard(svc, i))}
+        </div>
 
-      <style>{`
-        .card:hover .card-accent-bar {
-          width: 100% !important;
-        }
-      `}</style>
+        <div className="reveal reveal-delay-4" style={{ marginTop: 32 }}>
+          <Link href={ROUTES.price} className="btn btn-outline">
+            Xem Bảng Giá Đầy Đủ
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }

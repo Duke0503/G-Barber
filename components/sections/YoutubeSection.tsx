@@ -19,103 +19,107 @@ export default function YoutubeSection() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.querySelectorAll(".yt-card").forEach((el, i) => {
-              (el as HTMLElement).style.animation = `fadeInUp 0.6s ease-out ${i * 0.1}s both`;
+            entry.target.querySelectorAll(".reveal").forEach((el) => {
+              el.classList.add("visible");
             });
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
+  const renderCard = (v: typeof VIDEOS[0], i: number, isMobile = false) => (
+    <a
+      key={`${v.id}-${isMobile ? 'm' : 'd'}`}
+      href={`https://www.youtube.com/watch?v=${v.id}`}
+      target="_blank" rel="noopener noreferrer"
+      className={`card yt-card reveal reveal-delay-${Math.min(i + 1, 6)}`}
+      style={{
+        display: "block", textDecoration: "none", overflow: "hidden",
+        ...(isMobile ? { width: "72vw", maxWidth: 300 } : {}),
+      }}
+    >
+      <div style={{
+        position: "relative", aspectRatio: "16/9",
+        background: "#111", overflow: "hidden",
+        borderRadius: "var(--radius) var(--radius) 0 0",
+      }}>
+        <img
+          src={`https://img.youtube.com/vi/${v.id}/mqdefault.jpg`}
+          alt={v.title}
+          style={{
+            width: "100%", height: "100%", objectFit: "cover",
+            transition: "transform 0.5s cubic-bezier(0.4,0,0.2,1), filter 0.5s",
+            filter: "grayscale(30%)",
+          }}
+        />
+        <div style={{
+          position: "absolute", inset: 0,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: "rgba(0,0,0,0.15)",
+        }}>
+          <div style={{
+            width: 40, height: 40, borderRadius: "50%",
+            background: "rgba(255,255,255,0.08)",
+            backdropFilter: "blur(8px)",
+            border: "1.5px solid rgba(255,255,255,0.25)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div style={{ padding: "12px 14px" }}>
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 12, fontWeight: 600,
+          color: "rgba(255,255,255,0.65)",
+          lineHeight: 1.5,
+          display: "-webkit-box", WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical", overflow: "hidden",
+        }}>{v.title}</p>
+      </div>
+    </a>
+  );
+
   return (
-    <section ref={sectionRef} className="section" style={{ background: "#050505", position: "relative" }}>
+    <section ref={sectionRef} className="section" style={{ background: "#0a0a0a" }}>
       <div className="container">
+        {/* Header */}
         <div style={{
           display: "flex", alignItems: "flex-end", justifyContent: "space-between",
           flexWrap: "wrap", gap: 16,
-          marginBottom: "clamp(2.5rem, 6vw, 4rem)",
+          marginBottom: "clamp(2rem, 5vw, 3.5rem)",
         }}>
-          <div>
-            <span className="tag" style={{ marginBottom: 16, display: "inline-flex" }}>Kênh YouTube</span>
-            <div className="accent-line" style={{ margin: "16px 0 20px" }} />
+          <div className="section-header reveal" style={{ marginBottom: 0 }}>
+            <span className="tag">YouTube</span>
+            <div className="accent-line" />
             <h2 className="t-h2">
               Video<br />
               <span className="gradient-text">Mới Nhất</span>
             </h2>
           </div>
           <a href="https://youtube.com/@gbarbershop" target="_blank" rel="noopener noreferrer"
-            className="btn btn-outline btn-sm" style={{ alignSelf: "flex-end" }}>
+            className="btn btn-outline btn-sm reveal reveal-delay-1" style={{ alignSelf: "flex-end" }}>
             Subscribe →
           </a>
         </div>
 
-        {/* Mobile-first grid */}
-        <div className="grid-auto-3">
-          {VIDEOS.map((v, i) => (
-            <a
-              key={i}
-              href={`https://www.youtube.com/watch?v=${v.id}`}
-              target="_blank" rel="noopener noreferrer"
-              className="card yt-card"
-              style={{ display: "block", textDecoration: "none", overflow: "hidden", opacity: 0 }}
-            >
-              {/* Thumbnail */}
-              <div style={{
-                position: "relative", aspectRatio: "16/9",
-                background: "#111", overflow: "hidden",
-                borderRadius: "var(--radius, 14px) var(--radius, 14px) 0 0",
-              }}>
-                <img
-                  src={`https://img.youtube.com/vi/${v.id}/mqdefault.jpg`}
-                  alt={v.title}
-                  style={{
-                    width: "100%", height: "100%", objectFit: "cover", display: "block",
-                    transition: "transform 0.5s cubic-bezier(0.4,0,0.2,1), filter 0.5s",
-                    filter: "grayscale(40%)",
-                  }}
-                />
-                {/* Play button */}
-                <div style={{
-                  position: "absolute", inset: 0,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  background: "rgba(0,0,0,0.2)",
-                  transition: "background 0.3s",
-                }}>
-                  <div style={{
-                    width: 44, height: 44, borderRadius: "50%",
-                    background: "rgba(255,255,255,0.1)",
-                    backdropFilter: "blur(10px)",
-                    border: "1.5px solid rgba(255,255,255,0.3)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    transition: "all 0.3s",
-                  }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div style={{ padding: "14px" }}>
-                <p style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "clamp(11px, 2.5vw, 13px)",
-                  fontWeight: 600, color: "rgba(255,255,255,0.7)",
-                  lineHeight: 1.5,
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}>
-                  {v.title}
-                </p>
-              </div>
-            </a>
-          ))}
+        {/* Mobile: horizontal scroll */}
+        <div className="scroll-snap-x mobile-only"
+          style={{ margin: "0 calc(var(--container-px) * -1)", padding: "0 var(--container-px)" }}>
+          {VIDEOS.map((v, i) => renderCard(v, i, true))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="desktop-only grid-auto-3">
+          {VIDEOS.map((v, i) => renderCard(v, i, false))}
         </div>
       </div>
 

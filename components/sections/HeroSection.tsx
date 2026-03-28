@@ -6,106 +6,89 @@ import { BRAND } from "@/lib/constants/brand";
 import { ROUTES } from "@/lib/constants/routes";
 import { BranchService } from "@/lib/services/BranchService";
 
-const MARQUEE_ITEMS = [
-  "CẮT TÓC NAM",
-  "✦",
-  "NHUỘM TÓC",
-  "✦",
-  "UỐN XOĂN",
-  "✦",
-  "TATTOO HAIR",
-  "✦",
-  "BARBER STYLE",
-  "✦",
-  "POMADE",
-  "✦",
-];
-
 export default function HeroSection() {
   const branchCount = BranchService.getCount();
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return;
-      const glow = heroRef.current.querySelector(".hero-glow") as HTMLElement;
-      if (glow) {
-        glow.style.left = `${e.clientX - 200}px`;
-        glow.style.top = `${e.clientY - 200}px`;
-      }
+    // Parallax on desktop only
+    const handleScroll = () => {
+      if (!heroRef.current || window.innerWidth < 768) return;
+      const y = window.scrollY;
+      const bg = heroRef.current.querySelector(".hero-bg") as HTMLElement;
+      if (bg) bg.style.transform = `scale(1.1) translateY(${y * 0.15}px)`;
     };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <section className="hero" ref={heroRef}>
-      {/* BG image with heavy dark overlay */}
-      <div style={{
+      {/* BG image */}
+      <div className="hero-bg" style={{
         position: "absolute", inset: 0,
         backgroundImage: "url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1920&q=85')",
         backgroundSize: "cover", backgroundPosition: "center 30%",
-        filter: "grayscale(100%) contrast(1.1)",
+        filter: "grayscale(100%) contrast(1.1) brightness(0.7)",
+        transform: "scale(1.1)",
+        willChange: "transform",
       }} />
 
-      {/* Gradient overlays for depth */}
+      {/* Gradient overlays */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(to bottom, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.4) 30%, rgba(5,5,5,0.95) 100%)",
+        background: "linear-gradient(180deg, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0.2) 40%, rgba(5,5,5,0.92) 85%, #050505 100%)",
       }} />
 
-      {/* Subtle noise texture */}
-      <div className="noise-overlay" />
-
-      {/* Interactive glow following mouse */}
-      <div className="hero-glow" style={{
-        position: "absolute",
-        width: 400, height: 400,
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)",
-        pointerEvents: "none",
-        transition: "left 0.3s ease-out, top 0.3s ease-out",
-        filter: "blur(60px)",
-      }} />
-
-      {/* Large watermark text */}
-      <div style={{
-        position: "absolute", top: "50%", right: "-5%",
-        transform: "translateY(-50%) rotate(-90deg)",
-        fontFamily: "'Bebas Neue', sans-serif",
-        fontSize: "clamp(6rem, 15vw, 14rem)",
-        color: "rgba(255,255,255,0.02)",
-        letterSpacing: "0.2em",
-        whiteSpace: "nowrap",
-        pointerEvents: "none",
-        userSelect: "none",
+      {/* Side line decoration – desktop */}
+      <div className="desktop-only-flex" style={{
+        position: "absolute", top: "50%", right: 32,
+        transform: "translateY(-50%)",
+        flexDirection: "column", alignItems: "center", gap: 12,
+        color: "rgba(255,255,255,0.1)",
       }}>
-        BARBER SHOP
+        <div style={{ width: 1, height: 64, background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.15))" }} />
+        <span style={{
+          writingMode: "vertical-rl",
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: 9, fontWeight: 600,
+          letterSpacing: "0.35em",
+          textTransform: "uppercase",
+        }}>Scroll</span>
+        <div style={{ width: 1, height: 64, background: "linear-gradient(to bottom, rgba(255,255,255,0.15), transparent)" }} />
       </div>
+
+      {/* Noise */}
+      <div className="noise-overlay" />
 
       {/* Content */}
       <div className="container" style={{ position: "relative", zIndex: 2, width: "100%" }}>
-        {/* Label */}
-        <div className="fade-in-up" style={{ marginBottom: 24 }}>
-          <span className="tag">
-            ✦ {BRAND.tagline}
-          </span>
+        {/* Badge */}
+        <div className="fade-in-up" style={{ marginBottom: 20, marginTop: "15vh" }}>
+          <span className="tag">✦ {BRAND.tagline}</span>
         </div>
 
         {/* Main heading */}
-        <h1 className="t-hero fade-in-up delay-1" style={{ marginBottom: 28, maxWidth: 800 }}>
+        <h1 className="t-hero fade-in-up delay-1" style={{ marginBottom: 24, maxWidth: 800 }}>
           G<br />
           <span className="gradient-text">BARBER</span><br />
           SHOP
         </h1>
 
         {/* Tagline */}
-        <p className="t-body fade-in-up delay-2" style={{ maxWidth: 460, marginBottom: 40, color: "rgba(255,255,255,0.45)" }}>
-          Cắt tóc không chỉ là làm đẹp — đó là thái độ sống. Phong cách của bạn bắt đầu từ đây.
+        <p className="fade-in-up delay-2" style={{
+          maxWidth: 420, marginBottom: 36,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+          lineHeight: 1.8,
+          color: "rgba(255,255,255,0.5)",
+        }}>
+          Cắt tóc không chỉ là làm đẹp — đó là thái độ sống.
+          Phong cách của bạn bắt đầu từ đây.
         </p>
 
         {/* CTAs */}
-        <div className="fade-in-up delay-3" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 56 }}>
+        <div className="fade-in-up delay-3" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 48 }}>
           <Link href={ROUTES.contact} className="btn btn-primary btn-lg">
             Đặt Lịch Ngay
           </Link>
@@ -114,24 +97,34 @@ export default function HeroSection() {
           </Link>
         </div>
 
-        {/* Stats row */}
-        <div className="fade-in-up delay-4" style={{ display: "flex", gap: 40, flexWrap: "wrap" }}>
+        {/* Stats */}
+        <div className="fade-in-up delay-4" style={{
+          display: "flex", gap: "clamp(24px, 4vw, 48px)", flexWrap: "wrap",
+          paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.06)",
+        }}>
           {[
             { v: `${branchCount}+`, l: "Chi Nhánh" },
-            { v: "25+",  l: "Năm Kinh Nghiệm" },
+            { v: "25+", l: "Năm Kinh Nghiệm" },
             { v: "10K+", l: "Lượt Phục Vụ" },
           ].map((s) => (
-            <div key={s.l}>
+            <div key={s.l} style={{ width: 140 }}>
               <div style={{
                 fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: "clamp(2rem, 5vw, 3.2rem)",
+                fontSize: "clamp(2rem, 5vw, 3rem)",
                 color: "#fff",
                 lineHeight: 1,
-                letterSpacing: "0.05em",
+                letterSpacing: "0.04em",
               }}>
                 {s.v}
               </div>
-              <div className="t-label" style={{ marginTop: 6, color: "rgba(255,255,255,0.3)" }}>
+              <div style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 10, fontWeight: 600,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                marginTop: 6,
+                color: "rgba(255,255,255,0.25)",
+              }}>
                 {s.l}
               </div>
             </div>
@@ -139,41 +132,26 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <div style={{
-        position: "absolute", bottom: 28, right: "1.25rem",
-        display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
-        color: "rgba(255,255,255,0.2)",
-      }}>
-        <div style={{
-          width: 1, height: 56,
-          background: "linear-gradient(to bottom, rgba(255,255,255,0.2), transparent)",
-        }} />
-        <span className="t-label" style={{ fontSize: 8, writingMode: "vertical-rl", letterSpacing: "0.3em" }}>
-          SCROLL
-        </span>
-      </div>
-
       {/* Bottom marquee */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
         overflow: "hidden",
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-        padding: "12px 0",
-        background: "rgba(5,5,5,0.5)",
-        backdropFilter: "blur(10px)",
+        borderTop: "1px solid rgba(255,255,255,0.04)",
+        padding: "10px 0",
+        background: "rgba(5,5,5,0.6)",
+        backdropFilter: "blur(8px)",
       }}>
         <div className="marquee-track">
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span key={i} style={{
+          {[...Array(3)].map((_, r) => (
+            <span key={r} style={{
               fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: "clamp(0.7rem, 2vw, 0.9rem)",
-              letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.15)",
-              paddingRight: 24,
+              fontSize: "clamp(0.65rem, 1.8vw, 0.85rem)",
+              letterSpacing: "0.25em",
+              color: "rgba(255,255,255,0.08)",
+              paddingRight: 28,
               whiteSpace: "nowrap",
             }}>
-              {item}
+              CẮT TÓC NAM ✦ NHUỘM TÓC ✦ UỐN XOĂN ✦ TATTOO HAIR ✦ BARBER STYLE ✦ POMADE ✦&nbsp;
             </span>
           ))}
         </div>

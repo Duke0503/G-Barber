@@ -8,7 +8,7 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Dưỡng tóc & da đầu khỏe mạnh. Tóc bóng mượt suốt cả ngày.",
     price: "320.000đ",
     tag: "Best Seller",
-    image: "https://images.unsplash.com/photo-1626285861696-9f0bf5a49c6d?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=600&q=80",
     category: "tonic",
   },
   {

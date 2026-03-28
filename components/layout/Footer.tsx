@@ -25,7 +25,7 @@ export default function Footer() {
     <footer style={{
       background: "#030303",
       borderTop: "1px solid rgba(255,255,255,0.05)",
-      paddingBottom: 80,
+      paddingBottom: 100,
       position: "relative",
     }}>
       {/* Top marquee-style divider */}

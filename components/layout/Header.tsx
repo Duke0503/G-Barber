@@ -51,7 +51,7 @@ export default function Header() {
         <Logo />
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex" style={{ gap: 32, alignItems: "center" }}>
+        <nav className="lg-only-flex" style={{ gap: 32, alignItems: "center" }}>
           {NAV_DATA.map((item) =>
             item.children ? (
               <div key={item.label} className="dropdown">
@@ -73,7 +73,7 @@ export default function Header() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden lg:flex" style={{ alignItems: "center", gap: 16 }}>
+        <div className="lg-only-flex" style={{ alignItems: "center", gap: 16 }}>
           <a href={`tel:${BRAND.phone}`} style={{
             display: "flex", alignItems: "center", gap: 6,
             color: "rgba(255,255,255,0.5)", fontWeight: 600, fontSize: 13,
@@ -89,7 +89,7 @@ export default function Header() {
 
         {/* Mobile burger */}
         <button
-          className="lg:hidden"
+          className="lg-hidden"
           onClick={() => setDrawerOpen(true)}
           style={{
             background: "none", border: "none",
@@ -109,11 +109,12 @@ export default function Header() {
         onClose={() => setDrawerOpen(false)}
         placement="right"
         styles={{
-          body: { padding: 0 },
+          body: { padding: 0, display: "flex", flexDirection: "column" },
           header: { display: "none" },
-          wrapper: { width: "85vw" },
+          wrapper: { width: "85vw", maxWidth: 400 },
+          mask: { backdropFilter: "blur(8px)", background: "rgba(0,0,0,0.6)" }
         }}
-        style={{ background: "#0c0c0c" }}
+        style={{ background: "rgba(10,10,10,0.95)", borderLeft: "1px solid rgba(255,255,255,0.08)" }}
       >
         {/* Drawer header */}
         <div style={{
@@ -212,13 +213,13 @@ export default function Header() {
         </nav>
 
         {/* Drawer footer */}
-        <div style={{ padding: "24px", borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: "auto" }}>
+        <div style={{ padding: "32px 24px", borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: "auto" }}>
           <a href={`tel:${BRAND.phone}`} className="btn btn-primary"
-            style={{ width: "100%", marginBottom: 10, justifyContent: "center" }}>
+            style={{ width: "100%", height: 50, marginBottom: 12, justifyContent: "center", fontSize: 13 }}>
             <PhoneOutlined /> {BRAND.phoneDisplay}
           </a>
           <Link href="/lien-he" className="btn btn-outline"
-            style={{ width: "100%", justifyContent: "center" }}
+            style={{ width: "100%", height: 50, justifyContent: "center", fontSize: 13 }}
             onClick={() => setDrawerOpen(false)}>
             Đặt Lịch Ngay
           </Link>
