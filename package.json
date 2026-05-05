@@ -6,7 +6,8 @@
     "dev": "dotenv -e .env -- sh -c 'next dev --port $PORT'",
     "build": "dotenv -e .env -- next build",
     "start": "dotenv -e .env -- sh -c 'next start --port $PORT'",
-    "lint": "eslint"
+    "lint": "next lint",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.1",
