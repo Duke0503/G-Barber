@@ -18,10 +18,10 @@
   --text-muted:    #666666;
   --text-faint:    #999999;
 
-  --accent:        #b8954d;
-  --accent-hover:  #a37f3a;
-  --accent-dark:   #8a6a2e;
-  --accent-light:  rgba(184,149,77,0.08);
+  --accent:        #b91c1c; /* Deeper red matching the logo */
+  --accent-hover:  #991b1b;
+  --accent-dark:   #7f1d1d;
+  --accent-light:  rgba(185, 28, 28, 0.08);
 
   --border:        #e8e8e8;
   --border-hover:  #d0d0d0;
@@ -434,7 +434,7 @@ button { font-family: inherit; }
 
 /* ─── Selection ──────────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(184,149,77,0.25);
+  background: rgba(185, 28, 28, 0.25);
   color: var(--text-primary);
 }
 

@@ -50,7 +50,7 @@ export default function AboutPageClient() {
             color: "#ffffff",
             textShadow: "0 4px 16px rgba(0,0,0,0.6)"
           }}>
-            Câu Chuyện <span style={{ color: "var(--accent)", textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>G Barber</span>
+            Câu Chuyện <span style={{ color: "var(--accent)", textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>G - Barber</span>
           </h1>
           <p className="t-body reveal reveal-delay-2" style={{ 
             fontWeight: 500, 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
+import { Button } from "antd";
 import homeData from "@/data/home.json";
 import type { BranchesData } from "@/types";
 import { EnvironmentOutlined, PhoneOutlined, ClockCircleOutlined, ArrowRightOutlined } from "@ant-design/icons";
@@ -54,27 +55,40 @@ function BranchCard({ b, i, style }: {
           paddingTop: 10, borderTop: "1px solid var(--border)",
           display: "flex", justifyContent: "space-between", alignItems: "center",
         }}>
-          <a href={`tel:${b.phone.replace(/\s/g, "")}`} style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 13, fontWeight: 700,
-            color: "var(--text-primary)",
-            display: "flex", alignItems: "center", gap: 5,
-          }}><PhoneOutlined /> {b.phone}</a>
+          <Button 
+            type="link"
+            href={`tel:${b.phone.replace(/\s/g, "")}`}
+            icon={<PhoneOutlined />}
+            style={{
+              padding: 0,
+              fontFamily: "var(--font-body)",
+              fontSize: 13, fontWeight: 700,
+              color: "var(--text-primary)",
+            }}
+          >
+            {b.phone}
+          </Button>
           <span style={{
             fontSize: 10, color: "var(--text-muted)", fontWeight: 500,
             display: "flex", alignItems: "center", gap: 3,
           }}><ClockCircleOutlined /> {b.hours}</span>
         </div>
-        <a href={b.mapUrl} target="_blank" rel="noopener noreferrer"
+        <Button 
+          type="link"
+          href={b.mapUrl} 
+          target="_blank"
           style={{
+            padding: 0,
+            justifyContent: "flex-start",
             fontFamily: "var(--font-body)",
             fontSize: 10, fontWeight: 700,
             color: "var(--accent)",
             letterSpacing: "0.05em", textTransform: "uppercase",
             marginTop: 2, display: "flex", alignItems: "center", gap: 4,
-          }}>
+          }}
+        >
           Xem bản đồ <ArrowRightOutlined />
-        </a>
+        </Button>
       </div>
     </div>
   );

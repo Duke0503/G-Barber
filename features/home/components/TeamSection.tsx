@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
+import { Carousel } from "antd";
 import homeData from "@/data/home.json";
 import type { TeamData } from "@/types";
 
@@ -42,14 +42,6 @@ function TeamCard({ m, i, style }: {
 
 export default function TeamSection() {
   const ref = useScrollReveal();
-  const [activeIdx, setActiveIdx] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIdx((prev) => (prev + 1) % team.testimonials.length);
-    }, 4500);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <section ref={ref} className="section" style={{ background: "var(--bg-secondary)" }}>
@@ -89,28 +81,14 @@ export default function TeamSection() {
               <span key={i} className="star">★</span>
             ))}
           </div>
-          <div className="testimonial-carousel">
+          <Carousel autoplay effect="fade" dots={true}>
             {team.testimonials.map((t, i) => (
-              <div
-                key={t.name}
-                className={`testimonial-slide ${i === activeIdx ? "active" : ""}`}
-                aria-hidden={i !== activeIdx}
-              >
+              <div key={t.name} style={{ padding: '0 20px' }}>
                 <p className="testimonial-text">&ldquo;{t.text}&rdquo;</p>
                 <p className="testimonial-name">{t.name}</p>
               </div>
             ))}
-          </div>
-          <div className="testimonial-dots">
-            {team.testimonials.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveIdx(i)}
-                className={i === activeIdx ? "active" : ""}
-                aria-label={`Testimonial ${i + 1}`}
-              />
-            ))}
-          </div>
+          </Carousel>
         </div>
       </div>
 
@@ -149,61 +127,14 @@ export default function TeamSection() {
         @media (min-width: 768px) {
           .star { font-size: 16px; letter-spacing: 4px; }
         }
-        .testimonial-carousel {
-          position: relative;
-          min-height: 80px;
-        }
-        @media (min-width: 768px) {
-          .testimonial-carousel { min-height: 100px; }
-        }
-        .testimonial-slide {
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          opacity: 0;
-          transform: translateY(12px);
-          transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-          pointer-events: none;
-        }
-        .testimonial-slide.active {
-          position: relative;
-          opacity: 1;
-          transform: translateY(0);
-          pointer-events: auto;
-        }
-        .testimonial-text {
-          font-family: var(--font-display);
-          font-size: clamp(0.9rem, 2.2vw, 1.15rem);
-          font-style: italic;
-          color: var(--text-secondary);
-          line-height: 1.8;
-          margin-bottom: 12px;
-        }
-        .testimonial-name {
-          font-family: var(--font-body);
-          font-size: 11px;
-          font-weight: 600;
-          color: var(--accent);
-          letter-spacing: 0.08em;
-        }
-        .testimonial-dots {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-top: 14px;
-        }
-        .testimonial-dots button {
-          height: 6px;
-          border-radius: 3px;
+        /* Antd Carousel Overrides */
+        .ant-carousel .slick-dots li button {
           background: var(--text-faint);
-          border: none;
-          cursor: pointer;
-          transition: all 0.35s var(--ease);
-          width: 6px;
-          padding: 0;
+          height: 6px;
         }
-        .testimonial-dots button.active {
-          width: 20px;
+        .ant-carousel .slick-dots li.slick-active button {
           background: var(--accent);
+          width: 20px;
         }
       `}</style>
     </section>

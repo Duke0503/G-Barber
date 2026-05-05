@@ -17,7 +17,10 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Brand */}
           <div className="footer-brand">
-            <div className="footer-logo">G Barber</div>
+            <div className="footer-logo">
+              <span style={{ color: 'var(--accent)' }}>G</span>
+              <span style={{ color: '#ffffff' }}> - Barber</span>
+            </div>
             <p className="footer-tagline">
               Đẳng cấp trong từng đường kéo.<br />
               Phong cách nam tính, chuyên nghiệp.
@@ -69,8 +72,7 @@ export default function Footer() {
 
       <style>{`
         .footer {
-          background: var(--bg-secondary);
-          border-top: 1px solid var(--border);
+          background: var(--bg-dark);
           position: relative;
         }
         .footer-grid {
@@ -89,7 +91,6 @@ export default function Footer() {
           font-family: var(--font-display);
           font-size: 28px;
           font-weight: 600;
-          color: var(--accent);
           margin-bottom: 12px;
         }
         @media (min-width: 768px) {
@@ -97,7 +98,7 @@ export default function Footer() {
         }
         .footer-tagline {
           font-size: 13px;
-          color: var(--text-muted);
+          color: rgba(255, 255, 255, 0.6);
           line-height: 1.8;
           margin-bottom: 20px;
           max-width: 280px;
@@ -113,8 +114,8 @@ export default function Footer() {
         .footer-social-btn {
           font-size: 11px;
           font-weight: 600;
-          color: var(--text-muted);
-          border: 1px solid var(--border);
+          color: rgba(255, 255, 255, 0.6);
+          border: 1px solid rgba(255, 255, 255, 0.15);
           border-radius: var(--radius-sm);
           padding: 6px 12px;
           letter-spacing: 0.05em;
@@ -124,9 +125,9 @@ export default function Footer() {
           .footer-social-btn { font-size: 12px; padding: 8px 14px; }
         }
         .footer-social-btn:hover {
-          color: var(--accent);
-          border-color: rgba(201,169,110,0.4);
-          background: rgba(201,169,110,0.06);
+          color: #ffffff;
+          border-color: var(--accent);
+          background: rgba(185, 28, 28, 0.15);
           transform: translateY(-2px);
         }
         .footer-heading {
@@ -148,7 +149,7 @@ export default function Footer() {
         }
         .footer-links li a {
           font-size: 13px;
-          color: var(--text-muted);
+          color: rgba(255, 255, 255, 0.6);
           transition: color 0.2s;
         }
         @media (min-width: 768px) {
@@ -156,7 +157,7 @@ export default function Footer() {
           .footer-links { gap: 12px; }
         }
         .footer-links li a:hover {
-          color: var(--accent);
+          color: #ffffff;
         }
         .footer-contact {
           display: flex;
@@ -169,7 +170,7 @@ export default function Footer() {
         .footer-phone {
           font-family: var(--font-display);
           font-size: 20px;
-          color: var(--text-primary);
+          color: #ffffff;
           letter-spacing: 0.05em;
           transition: color 0.2s;
         }
@@ -181,7 +182,7 @@ export default function Footer() {
         }
         .footer-email {
           font-size: 12px;
-          color: var(--text-muted);
+          color: rgba(255, 255, 255, 0.6);
           word-break: break-all;
           transition: color 0.2s;
         }
@@ -189,11 +190,11 @@ export default function Footer() {
           .footer-email { font-size: 13px; }
         }
         .footer-email:hover {
-          color: var(--accent);
+          color: #ffffff;
         }
         .footer-info {
           font-size: 12px;
-          color: var(--text-muted);
+          color: rgba(255, 255, 255, 0.6);
           line-height: 1.6;
           display: flex;
           align-items: flex-start;
@@ -203,7 +204,7 @@ export default function Footer() {
           .footer-info { font-size: 13px; gap: 8px; }
         }
         .footer-bottom {
-          border-top: 1px solid var(--border);
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
           padding-top: 20px;
           display: flex;
           flex-direction: column;
@@ -222,7 +223,7 @@ export default function Footer() {
         }
         .footer-bottom p {
           font-size: 11px;
-          color: var(--text-faint);
+          color: rgba(255, 255, 255, 0.4);
           letter-spacing: 0.05em;
         }
         @media (min-width: 768px) {

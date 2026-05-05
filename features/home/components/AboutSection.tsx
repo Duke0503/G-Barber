@@ -18,7 +18,7 @@ export default function AboutSection() {
             <div className="about-image-inner">
               <img
                 src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80"
-                alt="G Barber Shop – Barbershop chuyên nghiệp"
+                alt="G - Barber Shop – Barbershop chuyên nghiệp"
                 className="about-image"
               />
             </div>

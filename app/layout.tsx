@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: `%s | ${BRAND.name}`,
   },
   description:
-    "G Barber Shop – Cắt tóc nam chuyên nghiệp tại Dĩ An, Bình Dương & Thủ Đức, TP.HCM. 3 chi nhánh phục vụ tận tâm. Hotline 0523 186 168.",
+    "G - Barber Shop – Cắt tóc nam chuyên nghiệp tại Dĩ An, Bình Dương & Thủ Đức, TP.HCM. 3 chi nhánh phục vụ tận tâm. Hotline 0523 186 168.",
   keywords: "g barber shop, cắt tóc nam, barber bình dương, barber thủ đức, nhuộm tóc nam, uốn tóc nam",
   openGraph: {
     type: "website",

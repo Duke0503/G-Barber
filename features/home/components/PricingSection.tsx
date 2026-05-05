@@ -1,5 +1,6 @@
 "use client";
 
+import { Image } from "antd";
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
 import homeData from "@/data/home.json";
 import type { PricingData } from "@/types";
@@ -25,13 +26,13 @@ export default function PricingSection() {
 
           {/* Pricing Image */}
           <div className="pricing-image-wrap reveal">
-            <a href={pricing.image} target="_blank" rel="noopener noreferrer" style={{ display: 'block', cursor: 'zoom-in' }}>
-              <img 
-                src={pricing.image} 
-                alt="Bảng giá G Barber Shop" 
-                className="pricing-image"
-              />
-            </a>
+            <Image 
+              src={pricing.image} 
+              alt="Bảng giá G - Barber Shop" 
+              className="pricing-image"
+              preview={{ mask: "Phóng to" }}
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
           </div>
         </div>
       </div>

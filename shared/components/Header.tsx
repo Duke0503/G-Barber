@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Button, Drawer } from "antd";
 import { PhoneOutlined, MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import { BRAND } from "@/lib/constants/brand";
 import { ROUTES } from "@/lib/constants/routes";
@@ -22,19 +23,19 @@ export default function Header() {
         style={{ justifyContent: "space-between" }}
       >
         {/* Mobile: burger left */}
-        <button
+        <Button
+          type="text"
           className="mobile-burger"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Menu"
-        >
-          {menuOpen ? <CloseOutlined /> : <MenuOutlined />}
-        </button>
+          onClick={() => setMenuOpen(true)}
+          icon={<MenuOutlined />}
+          style={{ fontSize: 18 }}
+        />
 
         {/* Logo — centered on mobile, left on desktop */}
         <Link href="/" className="header-logo-link">
           <img
             src="/assets/logo/logo_g.png"
-            alt="G Barber Logo"
+            alt="G - Barber Logo"
             className="header-logo"
           />
         </Link>
@@ -50,58 +51,112 @@ export default function Header() {
 
         {/* Desktop CTA */}
         <div className="desktop-cta">
-          <a href={`tel:${BRAND.phone}`} className="header-phone">
-            <PhoneOutlined /> {BRAND.phoneDisplay}
-          </a>
+          <Button 
+            type="primary" 
+            icon={<PhoneOutlined />} 
+            href={`tel:${BRAND.phone}`}
+            style={{ 
+              background: 'var(--accent)', 
+              borderRadius: 'var(--radius-full)',
+              height: 44,
+              padding: '0 24px',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 600,
+              letterSpacing: '0.1em'
+            }}
+          >
+            {BRAND.phoneDisplay}
+          </Button>
         </div>
 
         {/* Mobile: phone CTA right */}
-        <a href={`tel:${BRAND.phone}`} className="mobile-phone-btn" aria-label="Gọi điện">
-          <PhoneOutlined />
-        </a>
+        <Button
+          type="primary"
+          shape="circle"
+          icon={<PhoneOutlined />}
+          href={`tel:${BRAND.phone}`}
+          className="mobile-phone-btn"
+          style={{ 
+            background: 'var(--accent)', 
+            border: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 38,
+            height: 38,
+            minWidth: 38
+          }}
+        />
       </header>
 
-      {/* Mobile menu overlay */}
-      {menuOpen && (
-        <div className="mobile-menu-overlay" onClick={() => setMenuOpen(false)}>
-          <div className="mobile-menu-inner" onClick={(e) => e.stopPropagation()}>
-            {/* Logo in menu */}
-            <div className="mobile-menu-logo">
-              <img
-                src="/assets/logo/logo_g.png"
-                alt="G Barber"
-                style={{ height: 100, width: "auto" }}
-              />
-            </div>
-
-            <div className="mobile-menu-links">
-              {NAV_ITEMS.map((item, i) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="mobile-nav-link"
-                  style={{ animationDelay: `${0.08 + i * 0.08}s` }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-
-            <div className="mobile-menu-cta">
-              <a href={`tel:${BRAND.phone}`} className="btn btn-primary btn-lg" style={{ width: "100%", justifyContent: "center" }}>
-                <PhoneOutlined /> {BRAND.phoneDisplay}
-              </a>
-            </div>
-
-            {/* Social / hours info */}
-            <div className="mobile-menu-info">
-              <p>{BRAND.hours}</p>
-              <p>{BRAND.address}</p>
-            </div>
-          </div>
+      {/* Mobile menu using Antd Drawer */}
+      <Drawer
+        title={null}
+        placement="left"
+        closable={true}
+        onClose={() => setMenuOpen(false)}
+        open={menuOpen}
+        width="100%"
+        closeIcon={<CloseOutlined style={{ fontSize: 24 }} />}
+        styles={{
+          body: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 32,
+            padding: '20px'
+          }
+        }}
+      >
+        <div className="mobile-menu-logo">
+          <img
+            src="/assets/logo/logo_g.png"
+            alt="G - Barber"
+            style={{ height: 100, width: "auto" }}
+          />
         </div>
-      )}
+
+        <div className="mobile-menu-links">
+          {NAV_ITEMS.map((item, i) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="mobile-nav-link"
+              style={{ animationDelay: `${0.08 + i * 0.08}s` }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+
+        <div className="mobile-menu-cta" style={{ width: '100%', maxWidth: 320 }}>
+          <Button 
+            type="primary" 
+            block 
+            size="large"
+            icon={<PhoneOutlined />}
+            href={`tel:${BRAND.phone}`}
+            style={{ 
+              background: 'var(--accent)', 
+              height: 48, 
+              borderRadius: 'var(--radius-full)',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 600,
+              letterSpacing: '0.1em'
+            }}
+          >
+            {BRAND.phoneDisplay}
+          </Button>
+        </div>
+
+        {/* Social / hours info */}
+        <div className="mobile-menu-info">
+          <p>{BRAND.hours}</p>
+          <p>{BRAND.address}</p>
+        </div>
+      </Drawer>
 
       <style>{`
         /* ─── Mobile header layout ───────────────────────── */
@@ -140,22 +195,7 @@ export default function Header() {
           background: rgba(0,0,0,0.05);
         }
 
-        .mobile-phone-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          background: var(--accent);
-          color: #fff;
-          font-size: 14px;
-          transition: all 0.2s;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .mobile-phone-btn:active {
-          transform: scale(0.92);
-        }
+
 
         .desktop-nav { display: none; }
         .desktop-cta { display: none; }

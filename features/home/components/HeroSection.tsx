@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 import homeData from "@/data/home.json";
 import type { HeroData } from "@/types";
@@ -15,28 +16,25 @@ export default function HeroSection() {
     setLoaded(true);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!heroRef.current || window.innerWidth < 768) return;
-      const y = window.scrollY;
-      const bg = heroRef.current.querySelector(".hero-bg") as HTMLElement;
-      if (bg) bg.style.transform = `scale(1.08) translateY(${y * 0.12}px)`;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
 
   return (
     <section className="hero" ref={heroRef}>
       {/* Background */}
       <div className="hero-bg" style={{
         position: "absolute", inset: 0,
-        backgroundImage: `url('${hero.backgroundImage}')`,
-        backgroundSize: "cover", backgroundPosition: "center 30%",
         filter: "brightness(1) contrast(1)",
         transform: "scale(1.08)",
         willChange: "transform",
-      }} />
+      }}>
+        <Image
+          src={hero.backgroundImage}
+          alt="Hero Background"
+          fill
+          priority
+          style={{ objectFit: "cover", objectPosition: "center 30%" }}
+        />
+      </div>
 
       {/* Gradient overlay */}
       <div style={{
