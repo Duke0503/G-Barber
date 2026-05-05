@@ -201,8 +201,6 @@
     "heading": "Kiểu Tóc Thịnh Hành",
     "description": "Khám phá những mẫu tóc mới nhất & đang thịnh hành.",
     "images": [
-      { "src": "/assets/gallery/1.jpg", "label": "Fade Cut" },
-      { "src": "/assets/gallery/2.jpg", "label": "Textured Crop" },
       { "src": "/assets/gallery/3.jpg", "label": "Classic Pompadour" },
       { "src": "/assets/gallery/4.jpg", "label": "Undercut" },
       { "src": "/assets/gallery/5.jpg", "label": "Korean Perm" },
