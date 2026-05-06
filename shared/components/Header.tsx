@@ -18,10 +18,7 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className="header"
-        style={{ justifyContent: "space-between" }}
-      >
+      <header className="header" style={{ justifyContent: "space-between" }}>
         {/* Mobile: burger left */}
         <Button
           type="text"
@@ -35,9 +32,14 @@ export default function Header() {
         <Link href="/" className="header-logo-link">
           <img
             src="/assets/logo/logo_g.png"
-            alt="G - Barber Logo"
+            alt="G - Barbershop Logo"
             className="header-logo"
           />
+          <span className="header-brand-text">
+            <span className="header-brand-g">G </span>
+            <span className="header-brand-dash"> - </span>
+            <span className="header-brand-rest">BARBERSHOP</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}
@@ -51,18 +53,18 @@ export default function Header() {
 
         {/* Desktop CTA */}
         <div className="desktop-cta">
-          <Button 
-            type="primary" 
-            icon={<PhoneOutlined />} 
+          <Button
+            type="primary"
+            icon={<PhoneOutlined />}
             href={`tel:${BRAND.phone}`}
-            style={{ 
-              background: 'var(--accent)', 
-              borderRadius: 'var(--radius-full)',
+            style={{
+              background: "var(--accent)",
+              borderRadius: "var(--radius-full)",
               height: 44,
-              padding: '0 24px',
-              fontFamily: 'var(--font-body)',
+              padding: "0 24px",
+              fontFamily: "var(--font-body)",
               fontWeight: 600,
-              letterSpacing: '0.1em'
+              letterSpacing: "0.1em",
             }}
           >
             {BRAND.phoneDisplay}
@@ -76,15 +78,15 @@ export default function Header() {
           icon={<PhoneOutlined />}
           href={`tel:${BRAND.phone}`}
           className="mobile-phone-btn"
-          style={{ 
-            background: 'var(--accent)', 
-            border: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+          style={{
+            background: "var(--accent)",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             width: 38,
             height: 38,
-            minWidth: 38
+            minWidth: 38,
           }}
         />
       </header>
@@ -96,23 +98,23 @@ export default function Header() {
         closable={true}
         onClose={() => setMenuOpen(false)}
         open={menuOpen}
-        width="100%"
         closeIcon={<CloseOutlined style={{ fontSize: 24 }} />}
         styles={{
+          wrapper: { width: "100%" },
           body: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
             gap: 32,
-            padding: '20px'
-          }
+            padding: "20px",
+          },
         }}
       >
         <div className="mobile-menu-logo">
           <img
             src="/assets/logo/logo_g.png"
-            alt="G - Barber"
+            alt="G - Barbershop"
             style={{ height: 100, width: "auto" }}
           />
         </div>
@@ -131,20 +133,23 @@ export default function Header() {
           ))}
         </div>
 
-        <div className="mobile-menu-cta" style={{ width: '100%', maxWidth: 320 }}>
-          <Button 
-            type="primary" 
-            block 
+        <div
+          className="mobile-menu-cta"
+          style={{ width: "100%", maxWidth: 320 }}
+        >
+          <Button
+            type="primary"
+            block
             size="large"
             icon={<PhoneOutlined />}
             href={`tel:${BRAND.phone}`}
-            style={{ 
-              background: 'var(--accent)', 
-              height: 48, 
-              borderRadius: 'var(--radius-full)',
-              fontFamily: 'var(--font-body)',
+            style={{
+              background: "var(--accent)",
+              height: 48,
+              borderRadius: "var(--radius-full)",
+              fontFamily: "var(--font-body)",
               fontWeight: 600,
-              letterSpacing: '0.1em'
+              letterSpacing: "0.1em",
             }}
           >
             {BRAND.phoneDisplay}
@@ -163,6 +168,7 @@ export default function Header() {
         .header-logo-link {
           display: flex;
           align-items: center;
+          gap: 10px;
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
@@ -173,6 +179,27 @@ export default function Header() {
           width: auto;
           max-width: none;
           transition: transform 0.3s var(--ease);
+        }
+        .header-brand-text {
+          display: none;
+          font-family: var(--font-display);
+          font-size: 1.05rem;
+          font-weight: 400;
+          letter-spacing: 0.08em;
+          white-space: nowrap;
+          line-height: 1;
+        }
+        .header-brand-g {
+          color: var(--accent);
+          font-size: 1.25rem;
+          font-weight: 600;
+        }
+        .header-brand-dash {
+          white-space: pre;
+          color: var(--text-muted);
+        }
+        .header-brand-rest {
+          color: var(--text-muted);
         }
 
         .mobile-burger {
@@ -209,6 +236,10 @@ export default function Header() {
           }
           .header-logo {
             height: 130%;
+          }
+          .header-brand-text {
+            display: inline-flex;
+            align-items: center;
           }
           .mobile-burger { display: none !important; }
           .mobile-phone-btn { display: none !important; }

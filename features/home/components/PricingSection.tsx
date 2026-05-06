@@ -28,9 +28,9 @@ export default function PricingSection() {
           <div className="pricing-image-wrap reveal">
             <Image 
               src={pricing.image} 
-              alt="Bảng giá G - Barber Shop" 
+              alt="Bảng giá G - Barbershop" 
               className="pricing-image"
-              preview={{ mask: "Phóng to" }}
+              preview={{ cover: "Phóng to" }}
               style={{ width: "100%", height: "auto", display: "block" }}
             />
           </div>

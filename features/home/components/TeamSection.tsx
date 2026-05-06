@@ -1,7 +1,8 @@
 "use client";
 
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
-import { Carousel } from "antd";
+import { Carousel, Image } from "antd";
+import HorizontalScrollCards from "@/shared/components/HorizontalScrollCards";
 import homeData from "@/data/home.json";
 import type { TeamData } from "@/types";
 
@@ -19,17 +20,19 @@ function TeamCard({ m, i, style }: {
         aspectRatio: "3/4", overflow: "hidden",
         borderRadius: "var(--radius) var(--radius) 0 0",
       }}>
-        <img src={m.image}
+        <Image
+          src={m.image}
           alt={m.name}
-          style={{
-            width: "100%", height: "100%", objectFit: "cover",
-            transition: "transform 0.5s var(--ease)",
-          }} />
+          preview={false}
+          loading="lazy"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          styles={{ root: { display: "block", width: "100%", height: "100%" } }}
+        />
       </div>
       <div style={{ padding: "12px 10px 16px" }}>
         <p style={{
           fontFamily: "var(--font-display)", fontWeight: 600,
-          fontSize: 15, color: "var(--text-primary)", marginBottom: 2,
+          fontSize: 15, color: "rgba(255,255,255,0.92)", marginBottom: 2,
         }}>{m.name}</p>
         <p style={{
           fontFamily: "var(--font-body)", fontSize: 9, fontWeight: 500,
@@ -44,7 +47,7 @@ export default function TeamSection() {
   const ref = useScrollReveal();
 
   return (
-    <section ref={ref} className="section" style={{ background: "var(--bg-secondary)" }}>
+    <section ref={ref} className="section dark-section" style={{ background: "var(--bg-dark)" }}>
       <div className="container">
         {/* Header */}
         <div className="section-header reveal text-center" style={{ maxWidth: 480, margin: "0 auto" }}>
@@ -56,14 +59,17 @@ export default function TeamSection() {
 
         {/* Team members */}
         <div style={{ marginTop: "clamp(1.5rem, 4vw, 3rem)" }}>
-          {/* Mobile: horizontal scroll */}
-          <div className="scroll-snap-x"
-            style={{ padding: "0 var(--container-px)" }}>
+          {/* Mobile: horizontal scroll with auto-scroll + dots */}
+          <HorizontalScrollCards
+            itemCount={team.members.length}
+            darkDots={true}
+            style={{ padding: "0 var(--container-px)" }}
+          >
             {team.members.map((m, i) => (
               <TeamCard key={m.name} m={m} i={i}
                 style={{ width: "42vw", maxWidth: 180, flexShrink: 0 }} />
             ))}
-          </div>
+          </HorizontalScrollCards>
 
           {/* Desktop: grid (shows at 768px+) */}
           <div className="team-grid"
@@ -96,16 +102,18 @@ export default function TeamSection() {
         .team-card {
           cursor: pointer;
         }
-        .team-img img {
+        .team-img img,
+        .team-img .ant-image-img {
           filter: grayscale(50%);
           transition: filter 0.5s var(--ease), transform 0.5s var(--ease);
         }
-        .team-card:hover .team-img img {
+        .team-card:hover .team-img img,
+        .team-card:hover .team-img .ant-image-img {
           filter: grayscale(0%);
           transform: scale(1.06);
         }
         .team-card:hover {
-          border-color: rgba(201,169,110,0.4);
+          border-color: rgba(185,28,28,0.3);
         }
 
         /* Testimonial carousel */
@@ -120,17 +128,33 @@ export default function TeamSection() {
           margin-bottom: 12px;
         }
         .star {
-          color: var(--accent);
+          color: var(--accent-gold, #C49A2A);
           font-size: 14px;
           letter-spacing: 3px;
         }
         @media (min-width: 768px) {
           .star { font-size: 16px; letter-spacing: 4px; }
         }
+        .testimonial-text {
+          font-family: var(--font-display);
+          font-size: clamp(1rem, 2.5vw, 1.25rem);
+          font-style: italic;
+          color: rgba(255,255,255,0.88);
+          line-height: 1.65;
+          margin-bottom: 14px;
+        }
+        .testimonial-name {
+          font-family: var(--font-body);
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.42);
+        }
         /* Antd Carousel Overrides */
         .ant-carousel .slick-dots li button {
-          background: var(--text-faint);
-          height: 6px;
+          background: rgba(255,255,255,0.25);
+          height: 5px;
         }
         .ant-carousel .slick-dots li.slick-active button {
           background: var(--accent);

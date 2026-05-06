@@ -31,7 +31,7 @@ export default function GallerySection() {
                   src={img.src}
                   alt={img.label}
                   preview={{
-                    mask: (
+                    cover: (
                       <div className="gallery-overlay">
                         <span className="gallery-label">{img.label}</span>
                       </div>

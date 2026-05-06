@@ -18,8 +18,8 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer-brand">
             <div className="footer-logo">
-              <span style={{ color: 'var(--accent)' }}>G</span>
-              <span style={{ color: '#ffffff' }}> - Barber</span>
+              <span style={{ color: "var(--accent)" }}>G</span>
+              <span style={{ color: "#ffffff" }}> - Barbershop</span>
             </div>
             <p className="footer-tagline">
               Đẳng cấp trong từng đường kéo.<br />
@@ -98,7 +98,7 @@ export default function Footer() {
         }
         .footer-tagline {
           font-size: 13px;
-          color: rgba(255, 255, 255, 0.6);
+          color: rgba(255, 255, 255, 0.75);
           line-height: 1.8;
           margin-bottom: 20px;
           max-width: 280px;
@@ -114,8 +114,8 @@ export default function Footer() {
         .footer-social-btn {
           font-size: 11px;
           font-weight: 600;
-          color: rgba(255, 255, 255, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.15);
+          color: rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.25);
           border-radius: var(--radius-sm);
           padding: 6px 12px;
           letter-spacing: 0.05em;
@@ -149,7 +149,7 @@ export default function Footer() {
         }
         .footer-links li a {
           font-size: 13px;
-          color: rgba(255, 255, 255, 0.6);
+          color: rgba(255, 255, 255, 0.78);
           transition: color 0.2s;
         }
         @media (min-width: 768px) {
@@ -182,7 +182,7 @@ export default function Footer() {
         }
         .footer-email {
           font-size: 12px;
-          color: rgba(255, 255, 255, 0.6);
+          color: rgba(255, 255, 255, 0.75);
           word-break: break-all;
           transition: color 0.2s;
         }
@@ -194,7 +194,7 @@ export default function Footer() {
         }
         .footer-info {
           font-size: 12px;
-          color: rgba(255, 255, 255, 0.6);
+          color: rgba(255, 255, 255, 0.75);
           line-height: 1.6;
           display: flex;
           align-items: flex-start;
@@ -223,7 +223,7 @@ export default function Footer() {
         }
         .footer-bottom p {
           font-size: 11px;
-          color: rgba(255, 255, 255, 0.4);
+          color: rgba(255, 255, 255, 0.55);
           letter-spacing: 0.05em;
         }
         @media (min-width: 768px) {

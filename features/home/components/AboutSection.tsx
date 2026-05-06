@@ -1,5 +1,6 @@
 "use client";
 
+import { Image } from "antd";
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
 import homeData from "@/data/home.json";
 import type { AboutData } from "@/types";
@@ -16,14 +17,16 @@ export default function AboutSection() {
           {/* Image */}
           <div className="about-image-wrap reveal">
             <div className="about-image-inner">
-              <img
-                src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80"
-                alt="G - Barber Shop – Barbershop chuyên nghiệp"
-                className="about-image"
+              <Image
+                src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=75"
+                alt="G - Barbershop – Barbershop chuyên nghiệp"
+                preview={false}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                styles={{ root: { display: "block", width: "100%", height: "100%" } }}
               />
             </div>
             <div className="about-badge reveal reveal-delay-3">
-              <div className="about-badge-num">3+</div>
+              <div className="about-badge-num">3</div>
               <div className="about-badge-label">Chi Nhánh</div>
             </div>
           </div>
@@ -47,12 +50,10 @@ export default function AboutSection() {
       </div>
 
       <style>{`
-        .section-about {
-          overflow: hidden;
-        }
-        .about-image-wrap {
-          position: relative;
-        }
+        .section-about { overflow: hidden; }
+
+        .about-image-wrap { position: relative; }
+
         .about-image-inner {
           border-radius: var(--radius-lg);
           overflow: hidden;
@@ -60,68 +61,52 @@ export default function AboutSection() {
           transition: transform 0.5s var(--ease);
           transform-style: preserve-3d;
           perspective: 800px;
+          position: relative;
+          aspect-ratio: 4/3;
+        }
+        /* Scale the underlying <img> (next/image renders an <img>) on hover */
+        .about-image-inner img {
+          transition: transform 0.6s var(--ease) !important;
         }
         @media (min-width: 768px) {
           .about-image-inner:hover {
             transform: rotateY(-3deg) rotateX(3deg);
           }
-        }
-        .about-image {
-          width: 100%;
-          display: block;
-          aspect-ratio: 4/3;
-          object-fit: cover;
-          transition: transform 0.6s var(--ease);
-        }
-        @media (min-width: 768px) {
-          .about-image-inner:hover .about-image {
+          .about-image-inner:hover img {
             transform: scale(1.04);
           }
         }
+
         .about-badge {
           position: absolute;
-          bottom: 16px;
-          right: -4px;
+          bottom: 16px; right: -4px;
           padding: 10px 16px;
           background: var(--bg-elevated);
-          backdrop-filter: blur(16px);
           border: 1px solid var(--border);
           border-radius: var(--radius);
-          animation: bounceIn 0.8s var(--ease) both;
-          animation-delay: 0.5s;
+          animation: bounceIn 0.8s var(--ease) 0.5s both;
         }
         @media (min-width: 768px) {
-          .about-badge {
-            bottom: 20px;
-            right: -8px;
-            padding: 14px 22px;
-          }
+          .about-badge { bottom: 20px; right: -8px; padding: 14px 22px; }
         }
         @keyframes bounceIn {
-          0% { opacity: 0; transform: scale(0.6) translateY(10px); }
-          70% { transform: scale(1.05); }
+          0%   { opacity: 0; transform: scale(0.6) translateY(10px); }
+          70%  { transform: scale(1.05); }
           100% { opacity: 1; transform: scale(1); }
         }
         .about-badge-num {
           font-family: var(--font-display);
-          font-size: 26px;
-          line-height: 1;
+          font-size: 26px; line-height: 1;
           color: var(--accent);
         }
-        @media (min-width: 768px) {
-          .about-badge-num { font-size: 32px; }
-        }
+        @media (min-width: 768px) { .about-badge-num { font-size: 32px; } }
         .about-badge-label {
           font-family: var(--font-body);
-          font-size: 8px;
-          font-weight: 600;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
+          font-size: 8px; font-weight: 600;
+          letter-spacing: 0.15em; text-transform: uppercase;
           color: var(--text-muted);
         }
-        @media (min-width: 768px) {
-          .about-badge-label { font-size: 9px; }
-        }
+        @media (min-width: 768px) { .about-badge-label { font-size: 9px; } }
       `}</style>
     </section>
   );

@@ -1,10 +1,11 @@
 "use client";
 
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
-import { Button } from "antd";
+import { Button, Image } from "antd";
 import homeData from "@/data/home.json";
 import type { BranchesData } from "@/types";
 import { EnvironmentOutlined, PhoneOutlined, ClockCircleOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import HorizontalScrollCards from "@/shared/components/HorizontalScrollCards";
 
 const branches = homeData.branches as BranchesData;
 
@@ -20,11 +21,14 @@ function BranchCard({ b, i, style }: {
         display: "flex", flexDirection: "column",
         ...style,
       }}>
-      <div style={{ position: "relative", width: "100%", height: 140 }}>
-        <img
+      <div style={{ position: "relative", width: "100%", height: 140, overflow: "hidden" }}>
+        <Image
           src={`/assets/branches/cn${i + 1}.jpg`}
           alt={b.name}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          preview={false}
+          loading="lazy"
+          style={{ width: "100%", height: "140px", objectFit: "cover", display: "block" }}
+          styles={{ root: { display: "block", width: "100%", height: "100%" } }}
         />
         <div style={{
           position: "absolute", top: 10, right: 10,
@@ -98,7 +102,7 @@ export default function BranchesSection() {
   const ref = useScrollReveal();
 
   return (
-    <section ref={ref} className="section" style={{ background: "var(--bg-secondary)" }}>
+    <section ref={ref} className="section no-cv" style={{ background: "var(--bg-secondary)" }}>
       <div className="container">
         {/* Header */}
         <div className="section-header reveal text-center" style={{ maxWidth: 480, margin: "0 auto" }}>
@@ -110,14 +114,16 @@ export default function BranchesSection() {
 
         {/* Branch cards */}
         <div style={{ marginTop: "clamp(1.5rem, 4vw, 3rem)" }}>
-          {/* Mobile: horizontal scroll */}
-          <div className="scroll-snap-x"
-            style={{ padding: "0 var(--container-px)" }}>
+          {/* Mobile: horizontal scroll with auto-scroll + dots */}
+          <HorizontalScrollCards
+            itemCount={branches.items.length}
+            style={{ padding: "0 var(--container-px)" }}
+          >
             {branches.items.map((b, i) => (
               <BranchCard key={b.id} b={b} i={i}
                 style={{ width: "75vw", maxWidth: 280, flexShrink: 0 }} />
             ))}
-          </div>
+          </HorizontalScrollCards>
 
           {/* Desktop: grid (shows at 768px+) */}
           <div className="branch-grid">
@@ -130,13 +136,15 @@ export default function BranchesSection() {
 
       <style>{`
         .branch-card:hover {
-          border-color: rgba(201,169,110,0.4);
+          border-color: rgba(185,28,28,0.3);
         }
-        .branch-card:hover img {
-          transform: scale(1.03);
-        }
-        .branch-card img {
+        .branch-card img,
+        .branch-card .ant-image-img {
           transition: transform 0.5s var(--ease);
+        }
+        .branch-card:hover img,
+        .branch-card:hover .ant-image-img {
+          transform: scale(1.03);
         }
       `}</style>
     </section>

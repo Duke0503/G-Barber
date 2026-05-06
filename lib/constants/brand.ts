@@ -1,8 +1,8 @@
 import type { BrandConfig } from "@/types";
 
 export const BRAND: BrandConfig = {
-  name:         "G - Barber Shop",
-  shortName:    "G - BARBER",
+  name:         "G - Barbershop",
+  shortName:    "G - BARBERSHOP",
   tagline:      "FROM HEART TO HAIR",
   phone:        "0947947168",
   phoneDisplay: "0947 947 168",

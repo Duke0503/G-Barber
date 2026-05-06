@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonts loaded via <link> in layout.tsx — do NOT @import here (double-load penalty) */
 
 /* ═══════════════════════════════════════════════════════════════════════════
    G BARBER DESIGN SYSTEM — Black & White + Gold accent
@@ -6,25 +6,27 @@
 
 /* ─── CSS Variables ──────────────────────────────────────────────────────── */
 :root {
-  /* Palette — clean black & white with gold */
-  --bg-primary:    #ffffff;
-  --bg-secondary:  #f8f8f8;
-  --bg-card:       #ffffff;
-  --bg-elevated:   #ffffff;
-  --bg-dark:       #111111;
+  /* Warm Luxury Palette — cream + charcoal + crimson */
+  --bg-primary:    #FAF8F5;
+  --bg-secondary:  #F3EEE8;
+  --bg-card:       #FFFFFF;
+  --bg-elevated:   #FFFFFF;
+  --bg-dark:       #0F0E0D;
+  --bg-dark-2:     #1A1714;
 
-  --text-primary:  #111111;
-  --text-secondary: #333333;
-  --text-muted:    #666666;
-  --text-faint:    #999999;
+  --text-primary:  #1C1410;
+  --text-secondary:#3D3530;
+  --text-muted:    #6B6058;
+  --text-faint:    #9C9188;
 
-  --accent:        #b91c1c; /* Deeper red matching the logo */
+  --accent:        #b91c1c;
   --accent-hover:  #991b1b;
   --accent-dark:   #7f1d1d;
-  --accent-light:  rgba(185, 28, 28, 0.08);
+  --accent-light:  rgba(185, 28, 28, 0.09);
+  --accent-gold:   #C49A2A;
 
-  --border:        #e8e8e8;
-  --border-hover:  #d0d0d0;
+  --border:        #E8E3DC;
+  --border-hover:  #D4CDBF;
 
   --radius:        10px;
   --radius-sm:     6px;
@@ -34,8 +36,8 @@
   --ease:          cubic-bezier(0.4, 0, 0.2, 1);
   --transition:    0.3s var(--ease);
 
-  --font-display:  'Playfair Display', 'Georgia', serif;
-  --font-body:     'Inter', 'Helvetica Neue', sans-serif;
+  --font-display:  var(--font-oswald), 'Arial Narrow', sans-serif;
+  --font-body:     var(--font-inter), 'Helvetica Neue', sans-serif;
 
   --container-px:  16px;
   --section-py:    clamp(3rem, 8vw, 7rem);
@@ -78,27 +80,31 @@ button { font-family: inherit; }
   font-size: clamp(2.5rem, 10vw, 7rem);
   font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .t-h1 {
   font-family: var(--font-display);
   font-size: clamp(2rem, 8vw, 4.5rem);
   font-weight: 600;
   line-height: 1.1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 .t-h2 {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 5vw, 3rem);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.15;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 .t-h3 {
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 3vw, 1.8rem);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
+  letter-spacing: 0.03em;
 }
 .t-label {
   font-family: var(--font-body);
@@ -137,14 +143,18 @@ button { font-family: inherit; }
   height: 64px;
   display: flex; align-items: center;
   padding: 0 var(--container-px);
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  /* Mobile: solid bg — blur is GPU-expensive on low-end phones */
+  background: rgba(250, 248, 245, 0.98);
   border-bottom: 1px solid var(--border);
   transition: all 0.4s var(--ease);
 }
 @media (min-width: 768px) {
-  .header { height: 72px; }
+  .header {
+    height: 72px;
+    background: rgba(250, 248, 245, 0.92);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+  }
 }
 @media (min-width: 1024px) {
   .header { height: 80px; }
@@ -193,7 +203,7 @@ button { font-family: inherit; }
 .btn-primary:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(184,138,68,0.3);
+  box-shadow: 0 8px 28px rgba(185,28,28,0.4);
 }
 
 .btn-outline {
@@ -202,7 +212,7 @@ button { font-family: inherit; }
   color: var(--accent);
 }
 .btn-outline:hover {
-  background: rgba(184,138,68,0.08);
+  background: rgba(185,28,28,0.08);
   transform: translateY(-2px);
 }
 
@@ -223,12 +233,12 @@ button { font-family: inherit; }
 }
 @media (min-width: 768px) {
   .card {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
   }
   .card:hover {
-    border-color: rgba(201,169,110,0.4);
+    border-color: rgba(185,28,28,0.28);
     transform: translateY(-6px);
-    box-shadow: 0 20px 50px rgba(26,26,24,0.1), 0 0 0 1px rgba(201,169,110,0.15);
+    box-shadow: 0 22px 54px rgba(26,26,24,0.12), 0 0 0 1px rgba(185,28,28,0.1);
   }
 }
 @media (hover: none) {
@@ -243,7 +253,7 @@ button { font-family: inherit; }
   font-size: 0.55rem; font-weight: 600;
   letter-spacing: 0.18em; text-transform: uppercase;
   background: var(--accent-light);
-  border: 1px solid rgba(184,149,77,0.2);
+  border: 1px solid rgba(185,28,28,0.18);
   border-radius: var(--radius-full);
   color: var(--accent);
 }
@@ -286,6 +296,10 @@ button { font-family: inherit; }
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1;
+}
+/* Disable noise on mobile — SVG filter is GPU-expensive on low-end phones */
+@media (max-width: 767px) {
+  .noise-overlay { display: none; }
 }
 
 /* ─── Divider ────────────────────────────────────────────────────────────── */
@@ -369,7 +383,7 @@ button { font-family: inherit; }
   display: flex;
   justify-content: center;
   gap: 6px;
-  margin-top: 16px;
+  margin-top: 14px;
   padding: 8px 0;
 }
 .scroll-indicator-dot {
@@ -383,9 +397,51 @@ button { font-family: inherit; }
   transition: all 0.3s var(--ease);
 }
 .scroll-indicator-dot.active {
-  width: 20px;
+  width: 22px;
   border-radius: 3px;
   background: var(--accent);
+}
+/* Dark background variant */
+.scroll-indicator--dark .scroll-indicator-dot {
+  background: rgba(255,255,255,0.25);
+}
+.scroll-indicator--dark .scroll-indicator-dot.active {
+  background: var(--accent);
+}
+
+/* ─── Swipe hint (mobile only, CSS-animated) ─────────────────────────────── */
+.swipe-hint {
+  position: absolute;
+  right: var(--container-px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  padding: 5px 11px 5px 9px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  pointer-events: none;
+  z-index: 5;
+  animation: swipeHintAnim 3.2s ease forwards;
+  white-space: nowrap;
+}
+@keyframes swipeHintAnim {
+  0%   { opacity: 0; transform: translateY(-50%) translateX(10px); }
+  18%  { opacity: 1; transform: translateY(-50%) translateX(0); }
+  75%  { opacity: 1; transform: translateY(-50%) translateX(0); }
+  100% { opacity: 0; transform: translateY(-50%) translateX(0); }
+}
+@media (min-width: 768px) {
+  .swipe-hint { display: none !important; }
 }
 
 /* Hide scroll containers on desktop, show grids */
@@ -431,6 +487,50 @@ button { font-family: inherit; }
 .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 @media (min-width: 768px)  { .grid-4 { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media (min-width: 1024px) { .grid-4 { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+
+/* ─── Dark section overrides ─────────────────────────────────────────────── */
+.dark-section .t-h2,
+.dark-section .t-h3 { color: rgba(255,255,255,0.95); }
+.dark-section .t-body { color: rgba(255,255,255,0.78); }
+.dark-section .tag {
+  background: rgba(185,28,28,0.18);
+  border-color: rgba(185,28,28,0.38);
+  color: var(--accent);
+}
+.dark-section .accent-line,
+.dark-section .accent-line-center { background: var(--accent); }
+.dark-section .card {
+  background: #1E1A17;
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.dark-section .card:hover {
+  border-color: rgba(185,28,28,0.4);
+  box-shadow: 0 20px 52px rgba(0,0,0,0.5), 0 0 0 1px rgba(185,28,28,0.15);
+}
+
+/* ─── Marquee bar ────────────────────────────────────────────────────────── */
+.marquee-bar {
+  background: var(--bg-dark);
+  overflow: hidden;
+  padding: 13px 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.marquee-bar .marquee-track {
+  animation-duration: 32s;
+}
+.marquee-item {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+  padding-right: 2.5rem;
+}
+.marquee-dot { color: var(--accent); }
 
 /* ─── Selection ──────────────────────────────────────────────────────────── */
 ::selection {
@@ -517,16 +617,24 @@ button { font-family: inherit; }
   .section {
     padding: clamp(2.5rem, 6vw, 4rem) var(--container-px);
   }
-  
+
   /* Hero adjustments for mobile */
   .hero {
     min-height: 85svh;
     padding: 64px var(--container-px) 40px;
   }
-  
+
   /* Remove hover lift on mobile cards — touch-only */
   .card:active {
     transform: scale(0.98);
     transition-duration: 0.15s;
+  }
+
+  /* content-visibility: skip rendering off-screen sections.
+     Excluded from sections with horizontal scroll (no-cv class)
+     to avoid render jank when setInterval fires off-screen */
+  .section:not(.no-cv) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
   }
 }
